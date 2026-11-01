@@ -1,4 +1,4 @@
-// Football Mogul — Runtime UI (v1, code-built, no prefabs).
+// Football Realm — Runtime UI (v1, code-built, no prefabs).
 // The design system: dark sports aesthetic, professional dashboards,
 // cinematic football imagery. Tokens are in code so the UI can be
 // restyled in one place before Figma frames are built from it:
@@ -9,11 +9,11 @@
 // panels widen. That is the "one codebase, adapted interfaces"
 // rule from the stack recommendation.
 
-using FootballMogul.Core;
+using FootballRealm.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FootballMogul.Unity
+namespace FootballRealm.Unity
 {
     /// <summary>Builds the main menu and league picker at runtime.
     /// Attach to the same GameObject as GameManager, or let
@@ -33,7 +33,7 @@ namespace FootballMogul.Unity
 
         private void BuildCanvas()
         {
-            var go = new GameObject("FootballMogulCanvas");
+            var go = new GameObject("FootballRealmCanvas");
             _canvas = go.AddComponent<Canvas>();
             _canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             go.AddComponent<CanvasScaler>().uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
