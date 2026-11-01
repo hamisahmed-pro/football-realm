@@ -1,4 +1,4 @@
-// Football Mogul — Core (no UnityEngine dependency).
+// Football Realm — Core (no UnityEngine dependency).
 // Deterministic RNG: the same seed always produces the same season,
 // the same match, and the same story outcomes. This is what makes
 // saves reproducible and match results auditable — a requirement for
@@ -10,7 +10,7 @@
 
 using System;
 
-namespace FootballMogul.Core
+namespace FootballRealm.Core
 {
     /// <summary>Deterministic, seedable RNG for all simulation.</summary>
     public sealed class DeterministicRandom
