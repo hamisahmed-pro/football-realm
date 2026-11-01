@@ -1,4 +1,4 @@
-// Football Mogul — Match presentation.
+// Football Realm — Match presentation.
 // One simulation, two presentations:
 //   1. 2D pitch (UGUI): player dots and a ball dot move to each
 //      event's BallX/BallY. This is the working match view in v1.
@@ -15,11 +15,11 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using FootballMogul.Core;
+using FootballRealm.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FootballMogul.Unity
+namespace FootballRealm.Unity
 {
     public sealed class MatchPresentation : MonoBehaviour
     {
