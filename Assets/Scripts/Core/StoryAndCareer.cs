@@ -1,4 +1,4 @@
-// Football Mogul — Story engine, Career mode, Manager mode.
+// Football Realm — Story engine, Career mode, Manager mode.
 // The story engine is event-driven: events fire from simulation
 // state (form, morale, board confidence, rivalry), present choices,
 // and apply consequences to morale, chemistry, funds and reputation.
@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FootballMogul.Core
+namespace FootballRealm.Core
 {
     public sealed class StoryChoice
     {
