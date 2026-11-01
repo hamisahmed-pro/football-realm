@@ -1,4 +1,4 @@
-// Football Mogul — Fixtures and Season.
+// Football Realm — Fixtures and Season.
 // Berger round-robin: every club plays every other club once at home
 // and once away (double round-robin = 2 * (n - 1) rounds). Odd club
 // counts get a bye. This replaces the foundation slice's rotating
@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FootballMogul.Core
+namespace FootballRealm.Core
 {
     public sealed class Fixture
     {
