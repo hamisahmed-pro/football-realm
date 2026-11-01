@@ -84,7 +84,31 @@ ProjectSettings/ProjectVersion.txt  Unity 2022.3 LTS target
 Docs/DESIGN.md                    Design system, screens, flows
 ```
 
-## How to open and run (Unity 2022.3 LTS or Unity 6000)
+## Licence — the one blocker (free, no card)
+
+Unity Personal is free and needs no card, but the editor will not
+build without a Unity ID + Personal licence activation. That is
+not a code problem and it is not solved by downloading the editor.
+
+- Local: download Unity 6000.0.64f1 (in progress on the build
+  machine, `~/workspace/tools/unity/`), then activate a Personal
+  licence with a Unity ID (sign in in Hub, or use the manual
+  activation file flow at license.unity3d.com).
+- Cloud (no card): GitHub repo
+  https://github.com/hamisahmed-pro/football-mogul-unity is public,
+  workflow `.github/workflows/build.yml` (GameCI) is active and a
+  first run has been triggered. It needs repo secrets
+  `UNITY_LICENSE` (and `UNITY_EMAIL`/`UNITY_PASSWORD` for the
+  GameCI activation path) — set those once the Unity ID exists,
+  then re-run the workflow. Until then the cloud build will fail
+  at the licence step, as expected.
+- Verified on this box (2026-11-01): .NET SDK 8.0.427 installed,
+  Core compiles, all 22 CoreTests pass, a 380-match season averages
+  2.62 goals/match (41.8% home wins, 26.6% draws, 31.6% away wins).
+  Unity scripts (GameManager/MainMenuUI/MatchPresentation) have
+  NOT been compiled in an editor yet — that is the next gate.
+
+## How to open and run (Unity 6000 LTS)
 
 1. Open Unity Hub → Add project → select this folder.
    Unity will generate Library/, Packages/ and the rest on first open.
