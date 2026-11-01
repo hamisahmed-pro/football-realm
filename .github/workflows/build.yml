@@ -1,11 +1,11 @@
-# Football Mogul — Free cloud build (GitHub Actions + GameCI).
+# Football Realm — Free cloud build (GitHub Actions + GameCI).
 # No card required: GitHub Actions free tier for public repos, and
 # GameCI's Unity builder is free/open-source. The one secret this
 # needs is UNITY_LICENSE: a free Unity Personal licence, activated
 # once (see README.md "Licence" section) and stored as a repo secret.
 # Until that secret is set, this workflow will fail at the licence
 # step — that is expected, and it is the only blocker, not the code.
-name: Build Football Mogul
+name: Build Football Realm
 
 on:
   push:
@@ -26,10 +26,10 @@ jobs:
         with:
           unityVersion: 6000.0.64f1
           targetPlatform: Android
-          buildMethod: FootballMogul.Editor.BuildScript.BuildAndroid
+          buildMethod: FootballRealm.Editor.BuildScript.BuildAndroid
       - uses: actions/upload-artifact@v4
         with:
-          name: FootballMogul-Android
+          name: FootballRealm-Android
           path: Builds/Android
 
   build-windows:
@@ -45,8 +45,8 @@ jobs:
         with:
           unityVersion: 6000.0.64f1
           targetPlatform: StandaloneWindows64
-          buildMethod: FootballMogul.Editor.BuildScript.BuildWindows
+          buildMethod: FootballRealm.Editor.BuildScript.BuildWindows
       - uses: actions/upload-artifact@v4
         with:
-          name: FootballMogul-Windows
+          name: FootballRealm-Windows
           path: Builds/Windows
