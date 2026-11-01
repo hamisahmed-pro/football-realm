@@ -1,4 +1,4 @@
-// Football Mogul — Core models.
+// Football Realm — Core models.
 // All ratings are integers 1..99. No floats are used for ratings,
 // money, or points, so simulation is exact and reproducible.
 // Money is in whole currency units (no minor-unit conversion in v1;
@@ -7,7 +7,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FootballMogul.Core
+namespace FootballRealm.Core
 {
     public enum Position
     {
