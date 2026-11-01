@@ -1,4 +1,4 @@
-# Football Mogul — Design system and screens
+# Football Realm — Design system and screens
 
 ## Identity
 
