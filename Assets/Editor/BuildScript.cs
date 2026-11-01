@@ -1,9 +1,9 @@
-// Football Mogul — Headless build script.
+// Football Realm — Headless build script.
 // Usage (Linux editor, from the project root):
 //   Unity -batchmode -nographics -quit -projectPath . \
-//     -executeMethod FootballMogul.Editor.BuildScript.BuildAndroid
+//     -executeMethod FootballRealm.Editor.BuildScript.BuildAndroid
 //   Unity -batchmode -nographics -quit -projectPath . \
-//     -executeMethod FootballMogul.Editor.BuildScript.BuildWindows
+//     -executeMethod FootballRealm.Editor.BuildScript.BuildWindows
 //
 // This script creates the bootstrap scene at build time (a GameObject
 // with GameManager + MainMenuUI, found by type, not by GUID), so a
@@ -18,7 +18,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace FootballMogul.Editor
+namespace FootballRealm.Editor
 {
     public static class BuildScript
     {
@@ -26,13 +26,13 @@ namespace FootballMogul.Editor
         {
             string dir = "Assets/Scenes";
             if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-            string path = dir + "/FootballMogul.unity";
+            string path = dir + "/FootballRealm.unity";
             if (!File.Exists(path))
             {
                 var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
                 var go = new GameObject("GameManager");
-                go.AddComponent<FootballMogul.Unity.GameManager>();
-                go.AddComponent<FootballMogul.Unity.MainMenuUI>();
+                go.AddComponent<FootballRealm.Unity.GameManager>();
+                go.AddComponent<FootballRealm.Unity.MainMenuUI>();
                 EditorSceneManager.SaveScene(scene, path);
             }
             return path;
@@ -50,25 +50,25 @@ namespace FootballMogul.Editor
             var report = BuildPipeline.BuildPlayer(options);
             if (report.summary.result != UnityEditor.Build.Reporting.BuildResult.Succeeded)
             {
-                Debug.LogError("Football Mogul build FAILED: " + report.summary.result);
+                Debug.LogError("Football Realm build FAILED: " + report.summary.result);
                 EditorApplication.Exit(1);
             }
-            Debug.Log("Football Mogul build SUCCEEDED: " + output);
+            Debug.Log("Football Realm build SUCCEEDED: " + output);
         }
 
         public static void BuildAndroid()
         {
-            Build(EnsureScene(), BuildTarget.Android, "Builds/Android/FootballMogul.apk");
+            Build(EnsureScene(), BuildTarget.Android, "Builds/Android/FootballRealm.apk");
         }
 
         public static void BuildWindows()
         {
-            Build(EnsureScene(), BuildTarget.StandaloneWindows64, "Builds/Windows/FootballMogul.exe");
+            Build(EnsureScene(), BuildTarget.StandaloneWindows64, "Builds/Windows/FootballRealm.exe");
         }
 
         public static void BuildLinux()
         {
-            Build(EnsureScene(), BuildTarget.StandaloneLinux64, "Builds/Linux/FootballMogul");
+            Build(EnsureScene(), BuildTarget.StandaloneLinux64, "Builds/Linux/FootballRealm");
         }
     }
 }
