@@ -1,8 +1,8 @@
-// Football Mogul — Unity presentation layer.
+// Football Realm — Unity presentation layer.
 // GameManager is the only bootstrap object you need in a scene:
 // create an empty scene, add an empty GameObject, attach GameManager,
 // and it builds the whole UI at runtime (no prefabs required for v1).
-// Core simulation lives in FootballMogul.Core and has no Unity
+// Core simulation lives in FootballRealm.Core and has no Unity
 // dependency, so it can be unit-tested outside Unity.
 //
 // Platforms: one codebase, adapted interfaces — Android first,
@@ -12,10 +12,10 @@
 
 using System.Collections.Generic;
 using System.IO;
-using FootballMogul.Core;
+using FootballRealm.Core;
 using UnityEngine;
 
-namespace FootballMogul.Unity
+namespace FootballRealm.Unity
 {
     public enum GameScreen { MainMenu, League, Club, Tactics, Transfers, Match, Career, Manager, Settings }
 
@@ -34,7 +34,7 @@ namespace FootballMogul.Unity
         public ManagerCareer Manager { get; private set; } = new ManagerCareer();
         public GameScreen CurrentScreen { get; private set; } = GameScreen.MainMenu;
 
-        public string SavePath => Path.Combine(Application.persistentDataPath, "football_mogul_save.json");
+        public string SavePath => Path.Combine(Application.persistentDataPath, "football_realm_save.json");
 
         private void Awake()
         {
@@ -55,12 +55,12 @@ namespace FootballMogul.Unity
             }
             if (string.IsNullOrEmpty(json))
             {
-                Debug.LogError("Football Mogul: clubs.json not found. Assign it in the Inspector or place it in StreamingAssets.");
+                Debug.LogError("Football Realm: clubs.json not found. Assign it in the Inspector or place it in StreamingAssets.");
                 return;
             }
             var data = ClubDatabase.LoadFromJson(json);
             Leagues = ClubDatabase.BuildLeagues(data);
-            Debug.Log($"Football Mogul: loaded {Leagues.Count} leagues, {ClubDatabase.TotalClubs(data)} clubs.");
+            Debug.Log($"Football Realm: loaded {Leagues.Count} leagues, {ClubDatabase.TotalClubs(data)} clubs.");
         }
 
         /// <summary>Start a new game in a league, managing a club.</summary>
@@ -115,7 +115,7 @@ namespace FootballMogul.Unity
                 }
             }
             SaveSystem.WriteAtomic(SavePath, SaveSystem.Serialize(save));
-            Debug.Log($"Football Mogul: saved to {SavePath}");
+            Debug.Log($"Football Realm: saved to {SavePath}");
         }
 
         public bool TryLoad()
@@ -124,12 +124,12 @@ namespace FootballMogul.Unity
             try
             {
                 var save = SaveSystem.Deserialize(File.ReadAllText(SavePath));
-                Debug.Log($"Football Mogul: save v{save.Version} loaded, round {save.CurrentRound}.");
+                Debug.Log($"Football Realm: save v{save.Version} loaded, round {save.CurrentRound}.");
                 return true;
             }
             catch (System.Exception ex)
             {
-                Debug.LogError($"Football Mogul: save failed to load ({ex.Message}). Previous backup is at {SavePath}.bak");
+                Debug.LogError($"Football Realm: save failed to load ({ex.Message}). Previous backup is at {SavePath}.bak");
                 return false;
             }
         }
