@@ -1,0 +1,52 @@
+# Football Mogul — Free cloud build (GitHub Actions + GameCI).
+# No card required: GitHub Actions free tier for public repos, and
+# GameCI's Unity builder is free/open-source. The one secret this
+# needs is UNITY_LICENSE: a free Unity Personal licence, activated
+# once (see README.md "Licence" section) and stored as a repo secret.
+# Until that secret is set, this workflow will fail at the licence
+# step — that is expected, and it is the only blocker, not the code.
+name: Build Football Mogul
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-android:
+    name: Build Android
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          unityVersion: 6000.0.64f1
+          targetPlatform: Android
+          buildMethod: FootballMogul.Editor.BuildScript.BuildAndroid
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FootballMogul-Android
+          path: Builds/Android
+
+  build-windows:
+    name: Build Windows
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          unityVersion: 6000.0.64f1
+          targetPlatform: StandaloneWindows64
+          buildMethod: FootballMogul.Editor.BuildScript.BuildWindows
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FootballMogul-Windows
+          path: Builds/Windows
