@@ -1,11 +1,11 @@
-// Football Mogul — Tactics.
+// Football Realm — Tactics.
 // Formations, philosophies, team instructions and individual
 // instructions are data, not UI strings: they change the match
 // engine's ratings, pressing, width and risk in a documented way.
 
 using System;
 
-namespace FootballMogul.Core
+namespace FootballRealm.Core
 {
     public enum Formation
     {
