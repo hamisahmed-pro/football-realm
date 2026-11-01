@@ -1,4 +1,4 @@
-// Football Mogul — Club database and save system.
+// Football Realm — Club database and save system.
 // Database: clubs.json (799 clubs, 40 leagues, 20 countries) is the
 // single source of truth for clubs. Squads are generated, not stored,
 // so the JSON stays small and squads stay deterministic.
@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace FootballMogul.Core
+namespace FootballRealm.Core
 {
     public sealed class LeagueData
     {
@@ -187,7 +187,10 @@ namespace FootballMogul.Core
             {
                 File.Copy(path, backup, overwrite: true);
             }
-            File.Move(temp, path, overwrite: true);
+            // Unity's .NET profile has no File.Move overwrite overload
+            // (plain .NET does), so delete-then-move instead.
+            if (File.Exists(path)) File.Delete(path);
+            File.Move(temp, path);
         }
     }
 }
