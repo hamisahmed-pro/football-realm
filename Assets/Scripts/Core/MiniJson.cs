@@ -1,4 +1,4 @@
-// Football Mogul — MiniJson: dependency-free JSON for Core.
+// Football Realm — MiniJson: dependency-free JSON for Core.
 // Why this exists: System.Text.Json is not officially available as
 // a Unity package and requires manual dependency management in Unity,
 // while Newtonsoft.Json would add a package dependency to Core.
@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace FootballMogul.Core
+namespace FootballRealm.Core
 {
     public static class MiniJson
     {
