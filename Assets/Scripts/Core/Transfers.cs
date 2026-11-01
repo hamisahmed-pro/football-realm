@@ -1,4 +1,4 @@
-// Football Mogul — Transfer system.
+// Football Realm — Transfer system.
 // The seven stages from the design, implemented as a state machine,
 // not as a single "buy" button:
 //   1. Identify   2. Scout   3. Approach club / agent
@@ -11,7 +11,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FootballMogul.Core
+namespace FootballRealm.Core
 {
     public enum TransferStage
     {
