@@ -1,6 +1,6 @@
-using System; using System.IO; using FootballMogul.Core;
+using System; using System.IO; using FootballRealm.Core;
 class P { static void Main() {
-  var data = ClubDatabase.LoadFromJson(File.ReadAllText("/home/hatch/workspace/football-mogul-unity/Assets/Data/clubs.json"));
+  var data = ClubDatabase.LoadFromJson(File.ReadAllText("/home/hatch/workspace/football-realm/Assets/Data/clubs.json"));
   var leagues = ClubDatabase.BuildLeagues(data);
   var eng = leagues.Find(l => l.Country=="England" && l.Tier==1);
   var season = new Season(eng); var t = new TacticalSetup();
