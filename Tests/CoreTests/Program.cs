@@ -1,4 +1,4 @@
-// Football Mogul — Core verification (plain .NET, no Unity).
+// Football Realm — Core verification (plain .NET, no Unity).
 // Run: dotnet run --project Tests/CoreTests
 // Exit code 0 = all checks passed. Any failure prints FAIL and exits 1.
 
@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using FootballMogul.Core;
+using FootballRealm.Core;
 
 internal static class Program
 {
@@ -25,7 +25,7 @@ internal static class Program
             "Assets", "Data", "clubs.json"));
         // When run from the project folder, fall back to the known path.
         if (!File.Exists(jsonPath))
-            jsonPath = "/home/hatch/workspace/football-mogul-unity/Assets/Data/clubs.json";
+            jsonPath = "/home/hatch/workspace/football-realm/Assets/Data/clubs.json";
         Check(File.Exists(jsonPath), "clubs.json exists: " + jsonPath);
 
         var data = ClubDatabase.LoadFromJson(File.ReadAllText(jsonPath));
@@ -93,7 +93,7 @@ internal static class Program
         var save = new SaveData { PlayerClubId = home.Id, LeagueName = eng.Name, Country = "England", CurrentRound = 5, ManagerName = "Test" };
         string tmp = Path.Combine(Path.GetTempPath(), "fm_test_save.json");
         // Use a workspace temp dir, not /tmp tmpfs, for the atomic write test.
-        tmp = "/home/hatch/workspace/football-mogul-unity/Tests/fm_test_save.json";
+        tmp = "/home/hatch/workspace/football-realm/Tests/fm_test_save.json";
         SaveSystem.WriteAtomic(tmp, SaveSystem.Serialize(save));
         var loaded = SaveSystem.Deserialize(File.ReadAllText(tmp));
         Check(loaded.PlayerClubId == home.Id && loaded.CurrentRound == 5, "Save round-trips");
