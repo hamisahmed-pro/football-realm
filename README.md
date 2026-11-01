@@ -1,4 +1,4 @@
-# Football Mogul — Unity + C# (production-structured, not a demo)
+# Football Realm — Unity + C# (production-structured, not a demo)
 
 ## The order, and what changed
 
@@ -95,7 +95,7 @@ not a code problem and it is not solved by downloading the editor.
   licence with a Unity ID (sign in in Hub, or use the manual
   activation file flow at license.unity3d.com).
 - Cloud (no card): GitHub repo
-  https://github.com/hamisahmed-pro/football-mogul-unity is public,
+  https://github.com/hamisahmed-pro/football-realm is public,
   workflow `.github/workflows/build.yml` (GameCI) is active and a
   first run has been triggered. It needs repo secrets
   `UNITY_LICENSE` (and `UNITY_EMAIL`/`UNITY_PASSWORD` for the
@@ -132,7 +132,7 @@ not a code problem and it is not solved by downloading the editor.
   `MatchEngine.Simulate(home, away, tactics, tactics, seed)` must
   return identical goals and events both times.
 - Save, quit, reopen: the save loads, and
-  `football_mogul_save.json.bak` exists next to the save.
+  `football_realm_save.json.bak` exists next to the save.
 - Transfer: scout a player, negotiate a fee below demand (must
   fail), at/above demand (must pass), then contract, then
   registration — and check funds move from buyer to seller.
