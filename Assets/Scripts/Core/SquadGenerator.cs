@@ -1,4 +1,4 @@
-// Football Mogul — Squad generation.
+// Football Realm — Squad generation.
 // Real clubs, generated squads. This is stated plainly because it
 // matters: licensed real player data is not included, and no real
 // player is claimed to be in the game. Each club gets a deterministic
@@ -12,7 +12,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FootballMogul.Core
+namespace FootballRealm.Core
 {
     public static class SquadGenerator
     {
