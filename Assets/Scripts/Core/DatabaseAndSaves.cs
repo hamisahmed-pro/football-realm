@@ -7,33 +7,48 @@
 // destroys the previous good save — that is the whole point of the
 // atomic write.
 //
-// This file uses System.Text.Json, which is available in Unity 2021+
-// and in plain .NET. In Unity, the JSON text asset is loaded from
-// Resources/StreamingAssets; in tests, it is loaded from disk.
+// JSON is handled by MiniJson (dependency-free), not System.Text.Json,
+// because System.Text.Json is not officially available as a Unity
+// package. Core therefore compiles in Unity with zero packages.
 
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using System.Text;
 
 namespace FootballMogul.Core
 {
     public sealed class LeagueData
     {
-        [JsonPropertyName("country")] public string Country = string.Empty;
-        [JsonPropertyName("league")] public string League = string.Empty;
-        [JsonPropertyName("tier")] public int Tier;
-        [JsonPropertyName("clubs")] public List<string> Clubs = new List<string>();
+        public string Country = string.Empty;
+        public string League = string.Empty;
+        public int Tier;
+        public List<string> Clubs = new List<string>();
     }
 
     public static class ClubDatabase
     {
         public static List<LeagueData> LoadFromJson(string json)
         {
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true, IncludeFields = true };
-            return JsonSerializer.Deserialize<List<LeagueData>>(json, options)
-                   ?? new List<LeagueData>();
+            var arr = MiniJson.ParseArray(json);
+            var result = new List<LeagueData>();
+            foreach (var item in arr)
+            {
+                if (item is not Dictionary<string, object> obj) continue;
+                var ld = new LeagueData
+                {
+                    Country = MiniJson.GetString(obj, "country"),
+                    League = MiniJson.GetString(obj, "league"),
+                    Tier = MiniJson.GetInt(obj, "tier"),
+                };
+                if (obj.TryGetValue("clubs", out var clubsObj) && clubsObj is List<object> clubs)
+                {
+                    foreach (var c in clubs)
+                        if (c is string name) ld.Clubs.Add(name);
+                }
+                result.Add(ld);
+            }
+            return result;
         }
 
         /// <summary>Build playable leagues: every club gets an Id,
@@ -96,17 +111,68 @@ namespace FootballMogul.Core
     {
         public static string Serialize(SaveData save)
         {
-            var options = new JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
-            return JsonSerializer.Serialize(save, options);
+            var sb = new StringBuilder();
+            sb.Append("{\n");
+            sb.Append($"  \"version\": {save.Version},\n");
+            sb.Append($"  \"playerClubId\": \"{MiniJson.Escape(save.PlayerClubId)}\",\n");
+            sb.Append($"  \"leagueName\": \"{MiniJson.Escape(save.LeagueName)}\",\n");
+            sb.Append($"  \"country\": \"{MiniJson.Escape(save.Country)}\",\n");
+            sb.Append($"  \"seasonYear\": {save.SeasonYear},\n");
+            sb.Append($"  \"currentRound\": {save.CurrentRound},\n");
+            sb.Append($"  \"managerName\": \"{MiniJson.Escape(save.ManagerName)}\",\n");
+            sb.Append($"  \"funds\": {save.Funds},\n");
+            sb.Append($"  \"legacyPoints\": {save.LegacyPoints},\n");
+            sb.Append("  \"achievements\": [");
+            for (int i = 0; i < save.Achievements.Count; i++)
+            {
+                if (i > 0) sb.Append(", ");
+                sb.Append($"\"{MiniJson.Escape(save.Achievements[i])}\"");
+            }
+            sb.Append("],\n  \"clubTotals\": {");
+            bool first = true;
+            foreach (var kv in save.ClubTotals)
+            {
+                if (!first) sb.Append(", ");
+                first = false;
+                sb.Append($"\"{MiniJson.Escape(kv.Key)}\": [{string.Join(", ", kv.Value)}]");
+            }
+            sb.Append("}\n}");
+            return sb.ToString();
         }
 
         public static SaveData Deserialize(string json)
         {
-            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true, IncludeFields = true };
-            var save = JsonSerializer.Deserialize<SaveData>(json, options);
-            if (save == null) throw new InvalidDataException("Save file is empty or invalid.");
+            var obj = MiniJson.ParseObject(json);
+            var save = new SaveData
+            {
+                Version = MiniJson.GetInt(obj, "version"),
+                PlayerClubId = MiniJson.GetString(obj, "playerClubId"),
+                LeagueName = MiniJson.GetString(obj, "leagueName"),
+                Country = MiniJson.GetString(obj, "country"),
+                SeasonYear = MiniJson.GetInt(obj, "seasonYear", 2025),
+                CurrentRound = MiniJson.GetInt(obj, "currentRound", 1),
+                ManagerName = MiniJson.GetString(obj, "managerName"),
+                Funds = MiniJson.GetLong(obj, "funds"),
+                LegacyPoints = MiniJson.GetInt(obj, "legacyPoints"),
+            };
             if (save.Version != 1)
                 throw new InvalidDataException($"Unsupported save version {save.Version}.");
+            if (obj.TryGetValue("achievements", out var ach) && ach is List<object> achList)
+                foreach (var a in achList)
+                    if (a is string s) save.Achievements.Add(s);
+            if (obj.TryGetValue("clubTotals", out var ct) && ct is Dictionary<string, object> ctObj)
+            {
+                foreach (var kv in ctObj)
+                {
+                    if (kv.Value is List<object> nums)
+                    {
+                        var arr = new int[nums.Count];
+                        for (int i = 0; i < nums.Count; i++)
+                            arr[i] = nums[i] is long l ? (int)l : 0;
+                        save.ClubTotals[kv.Key] = arr;
+                    }
+                }
+            }
             return save;
         }
 
