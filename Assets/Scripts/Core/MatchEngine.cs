@@ -1,4 +1,4 @@
-// Football Mogul — Match Engine.
+// Football Realm — Match Engine.
 // Minute-by-minute deterministic simulation. A match is 90 minutes
 // of events, not a single dice roll: each minute can produce a shot,
 // a goal, a card, a substitution, an injury, or nothing, with
@@ -18,7 +18,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace FootballMogul.Core
+namespace FootballRealm.Core
 {
     public enum MatchEventKind
     {
